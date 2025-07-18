@@ -1,0 +1,73 @@
+[gd_scene load_steps=11 format=3 uid="uid://baagc3a3ws25j"]
+
+[ext_resource type="Script" uid="uid://x2ma3bxhbkrw" path="res://Scripts/Enemy/enemy_controller.gd" id="1_mgn85"]
+[ext_resource type="Script" uid="uid://bgeqw4pxum4pe" path="res://Scripts/health.gd" id="2_fgw7u"]
+[ext_resource type="Script" uid="uid://lxykvh8n180e" path="res://Scripts/character_movement.gd" id="2_hgpnb"]
+[ext_resource type="Texture2D" uid="uid://dffyshbpa366p" path="res://Sprites/Grape/Grape Officer.png" id="3_fgw7u"]
+[ext_resource type="Script" uid="uid://rmgpfeaxtipq" path="res://Scripts/character_animations.gd" id="4_p6luo"]
+[ext_resource type="Texture2D" uid="uid://bddi4y7267rvk" path="res://Sprites/Grape/Grape Officer Gun.png" id="5_s770c"]
+[ext_resource type="Script" uid="uid://op5p8n5l6mhr" path="res://Scripts/Weapons/gun.gd" id="6_fgw7u"]
+[ext_resource type="PackedScene" uid="uid://3vx2xqx58jh1" path="res://Scenes/pistol_laser.tscn" id="7_p6luo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yb21e"]
+size = Vector2(36, 33)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hgpnb"]
+radius = 86.2844
+
+[node name="GrapeOfficer" type="Node2D" node_paths=PackedStringArray("sprite", "health", "guns")]
+script = ExtResource("1_mgn85")
+sprite = NodePath("CharacterBody2D/Sprite")
+health = NodePath("Health")
+guns = NodePath("CharacterBody2D/Guns")
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("2_fgw7u")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+collision_layer = 8
+collision_mask = 7
+script = ExtResource("2_hgpnb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_yb21e")
+
+[node name="Sprite" type="Sprite2D" parent="CharacterBody2D" node_paths=PackedStringArray("damage_animation_timer")]
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_fgw7u")
+script = ExtResource("4_p6luo")
+damage_animation_timer = NodePath("../../AnimationTimers/DamageAnimationTimer")
+
+[node name="Guns" type="Node2D" parent="CharacterBody2D"]
+
+[node name="Gun" type="Node2D" parent="CharacterBody2D/Guns" node_paths=PackedStringArray("character", "gun_sprite", "cooldown_timer", "fire_point")]
+script = ExtResource("6_fgw7u")
+character = NodePath("../../..")
+laser_scene = ExtResource("7_p6luo")
+gun_sprite = NodePath("GrapeOfficerGun")
+cooldown_timer = NodePath("FireCooldown")
+fire_point = NodePath("GrapeOfficerGun/FirePoint")
+
+[node name="GrapeOfficerGun" type="Sprite2D" parent="CharacterBody2D/Guns/Gun"]
+position = Vector2(18, 9)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("5_s770c")
+
+[node name="FirePoint" type="Node2D" parent="CharacterBody2D/Guns/Gun/GrapeOfficerGun"]
+position = Vector2(13.75, -2.5)
+
+[node name="FireCooldown" type="Timer" parent="CharacterBody2D/Guns/Gun"]
+
+[node name="AnimationTimers" type="Node2D" parent="."]
+
+[node name="DamageAnimationTimer" type="Timer" parent="AnimationTimers"]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 255
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hgpnb")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

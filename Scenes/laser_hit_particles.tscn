@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://jkepi78lm5rf"]
+
+[ext_resource type="Script" uid="uid://p44eob8btack" path="res://Scripts/particle_effects.gd" id="1_bcofk"]
+
+[sub_resource type="Gradient" id="Gradient_0c07c"]
+colors = PackedColorArray(34.806, 1.105, 0.082, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2cgwh"]
+gradient = SubResource("Gradient_0c07c")
+
+[sub_resource type="Curve" id="Curve_0c07c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.606742), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_2cgwh"]
+curve = SubResource("Curve_0c07c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0c07c"]
+particle_flag_disable_z = true
+spread = 21.145
+initial_velocity_min = 109.19
+initial_velocity_max = 339.08
+gravity = Vector3(0, 98, 0)
+scale_max = 2.3
+scale_curve = SubResource("CurveTexture_2cgwh")
+color_ramp = SubResource("GradientTexture1D_2cgwh")
+
+[node name="LaserHitParticles" type="GPUParticles2D"]
+emitting = false
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_0c07c")
+script = ExtResource("1_bcofk")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://ke0mkuup52qd"]
+
+[ext_resource type="Script" uid="uid://cruji0uew86vt" path="res://Scripts/Weapons/laser.gd" id="1_ja2jx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2cgwh"]
+size = Vector2(9, 2)
+
+[node name="RifleLaser" type="Area2D"]
+collision_layer = 0
+collision_mask = 253
+script = ExtResource("1_ja2jx")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 8.0
+offset_bottom = 0.5
+color = Color(62.431, 7.182, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3.5, 0)
+shape = SubResource("RectangleShape2D_2cgwh")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
