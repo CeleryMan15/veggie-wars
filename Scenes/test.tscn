@@ -39,7 +39,7 @@ color = Color(0.929715, 0.929715, 0.929715, 1)
 
 [node name="TestSceneNode" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="PlayerCamera" type="Camera2D" parent="."]
 zoom = Vector2(0.6, 0.6)
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -83,7 +83,7 @@ collision_mask = 5
 script = ExtResource("2_0qy5o")
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="KommanderKarrot/CharacterBody2D"]
-remote_path = NodePath("../../../Camera2D")
+remote_path = NodePath("../../../PlayerCamera")
 
 [node name="UI" type="Node2D" parent="KommanderKarrot/CharacterBody2D/RemoteTransform2D" node_paths=PackedStringArray("player")]
 script = ExtResource("7_0c07c")
