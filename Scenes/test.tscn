@@ -42,7 +42,7 @@ color = Color(0.929715, 0.929715, 0.929715, 1)
 [node name="PlayerCamera" type="Camera2D" parent="."]
 zoom = Vector2(0.6, 0.6)
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 z_index = -1
 offset_left = -398.0
 offset_top = -224.0
